@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: "Bump version"
+        uses: googleapis/release-please-action@v4
+
       - name: "Publish Templates"
         uses: devcontainers/action@v1
         with:
