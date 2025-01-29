@@ -1,0 +1,22 @@
+{
+  "id": "joomla-mariadb",
+  "version": "0.1.0",
+  "name": "Joomla & MariaDB",
+  "description": "A devcontainer for authoring Joomla! Extensions. Includes PHP, MariaDB (MySQL compatible), Node.js",
+  "documentationURL": "https://github.com/renebentes/devcontainer-templates/tree/main/src/joomla-mariadb",
+  "licenseURL": "https://github.com/renebentes/devcontainer-templates/blob/main/LICENSE",
+  "publisher": "Rene Bentes Pinto",
+  "options": {
+    "imageVariant": {
+      "type": "string",
+      "description": "Joomla! version:",
+      "proposals": [
+        "5.2-php8.3-apache",
+        "5.2-php8.2-apache",
+        "5.2-php8.1-apache"
+      ],
+      "default": "5.2-php8.3-apache"
+    }
+  },
+  "platforms": ["Joomla", "PHP", "MariaDB (MySQL Compatible)", "Node.js"]
+}
