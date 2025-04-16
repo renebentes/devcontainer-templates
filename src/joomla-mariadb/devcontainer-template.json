@@ -1,6 +1,6 @@
 {
   "id": "joomla-mariadb",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "name": "Joomla & MariaDB",
   "description": "A devcontainer for authoring Joomla! Extensions. Includes PHP, MariaDB (MySQL compatible), Node.js",
   "documentationURL": "https://github.com/renebentes/devcontainer-templates/tree/main/src/joomla-mariadb",
@@ -18,5 +18,10 @@
       "default": "5.2-php8.3-apache"
     }
   },
-  "platforms": ["Joomla", "PHP", "MariaDB (MySQL Compatible)", "Node.js"]
+  "platforms": [
+    "Joomla",
+    "PHP",
+    "MariaDB (MySQL Compatible)",
+    "Node.js"
+  ]
 }
