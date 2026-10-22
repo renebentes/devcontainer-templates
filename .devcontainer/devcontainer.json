@@ -1,8 +1,9 @@
-// More info: https://containers.dev/implementors/json_reference/
 {
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-18-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:4-24-trixie",
   "features": {
-    "ghcr.io/devcontainers/features/docker-in-docker:4": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {
+      "moby": "false"
+    },
     "ghcr.io/lukewiwa/features/shellcheck": {}
   },
   "customizations": {
