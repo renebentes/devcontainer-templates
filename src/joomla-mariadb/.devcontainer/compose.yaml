@@ -1,5 +1,4 @@
 name: joomla-mariadb-devcontainer
-
 services:
   app:
     build:

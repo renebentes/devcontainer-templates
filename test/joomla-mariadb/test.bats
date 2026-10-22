@@ -26,6 +26,7 @@ setup() {
 }
 
 @test 'Joomla version should be ${JOOMLA_VERSION}' {
+    run sleep 10
     run /var/www/html/cli/joomla.php --version
     assert_output --partial "Joomla! ${JOOMLA_VERSION}"
 }
