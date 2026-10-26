@@ -23,11 +23,11 @@ OPTION_PROPERTY=$(jq 'has("options")' devcontainer-template.json)
 if $OPTION_PROPERTY; then
     mapfile -t OPTIONS < <(jq -r '.options | keys[]' devcontainer-template.json)
 
-    if [ "${OPTIONS[0]}" != "" ] && [ "${OPTIONS[0]}" != "null" ]; then
+    if [ -n "${OPTIONS[0]-}" ] && [ "${OPTIONS[0]}" != "null" ]; then
         echo "(!) Configuring template options for '${TEMPLATE_ID}'"
         for OPTION in "${OPTIONS[@]}"; do
             OPTION_KEY="\${templateOption:$OPTION}"
-            OPTION_VALUE=$(jq -r ".options | .${OPTION} | .default" devcontainer-template.json)
+            OPTION_VALUE=$(jq -r --arg key "${OPTION}" '.options[$key].default' devcontainer-template.json)
 
             if [ "${OPTION_VALUE}" = "" ] || [ "${OPTION_VALUE}" = "null" ]; then
                 echo "Template '${TEMPLATE_ID}' is missing a default value for option '${OPTION}'"
@@ -35,7 +35,7 @@ if $OPTION_PROPERTY; then
             fi
 
             echo "(!) Replacing '${OPTION_KEY}' with '${OPTION_VALUE}'"
-            OPTION_VALUE_ESCAPED=$(sed -e 's/[]\/$*.^[]/\\&/g' <<<"${OPTION_VALUE}")
+            OPTION_VALUE_ESCAPED=$(sed -e 's/[]\/&$*.^[]/\\&/g' <<<"${OPTION_VALUE}")
             find ./ -type f -print0 | xargs -0 sed -i "s/${OPTION_KEY}/${OPTION_VALUE_ESCAPED}/g"
         done
     fi
@@ -48,12 +48,14 @@ if [ -d "${TEST_DIR}" ]; then
     echo "(*) Copying test folder"
     DEST_DIR="${SRC_DIR}/test-project"
     mkdir -p "${DEST_DIR}"
-    cp -Rp "${TEST_DIR}"/* "${DEST_DIR}"
+    cp -Rp "${TEST_DIR}/." "${DEST_DIR}"
     cp -Rp test/bats "${DEST_DIR}"
     cp -Rp test/test-helper "${DEST_DIR}"
 fi
 
 export DOCKER_BUILDKIT=1
+# Workaround from https://github.com/devcontainers/cli/issues/1320
+export BUILDX_BAKE_ENTITLEMENTS_FS=0
 echo "(*) Installing @devcontainer/cli"
 npm install -g @devcontainers/cli
 
