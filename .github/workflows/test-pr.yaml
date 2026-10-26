@@ -4,6 +4,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   detect-changes:
@@ -15,12 +16,12 @@ jobs:
         id: filter
         with:
           filters: |
-            joomla-mariadb: src/joomla-mariadb
+            joomla-mariadb: 'src/joomla-mariadb/**'
 
   test:
     needs: [detect-changes]
+    if: ${{ needs.detect-changes.outputs.templates != '[]' }}
     runs-on: ubuntu-latest
-    continue-on-error: true
     strategy:
       matrix:
         templates: ${{ fromJSON(needs.detect-changes.outputs.templates) }}
