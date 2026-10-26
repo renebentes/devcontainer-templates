@@ -1,9 +1,16 @@
 #!/bin/bash
+set -euo pipefail
+
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 <template-id>" >&2
+    exit 2
+fi
+
 TEMPLATE_ID="$1"
-
-set -e
-
-shopt -s dotglob
+if [[ "${TEMPLATE_ID}" == */* || ! -d "src/${TEMPLATE_ID}" ]]; then
+    echo "Template '${TEMPLATE_ID}' does not exist in src/" >&2
+    exit 1
+fi
 
 SRC_DIR="/tmp/${TEMPLATE_ID}"
 cp -R "src/${TEMPLATE_ID}" "${SRC_DIR}"
